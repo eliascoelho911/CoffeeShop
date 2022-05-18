@@ -1,4 +1,4 @@
-package com.github.eliascoelho911.coffeeshop.ui.theme
+package com.github.eliascoelho911.coffeeshop.presentation.theme
 
 import androidx.compose.material3.Shapes
 
