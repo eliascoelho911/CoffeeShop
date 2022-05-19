@@ -26,7 +26,7 @@ import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
 private val CourgetteFontFamily = FontFamily(Font(R.font.courgette_regular))
 
 @Composable
-fun CoffeeShopMediumTopAppBar(
+fun CustomMediumTopAppBar(
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
@@ -58,5 +58,21 @@ private fun CoffeeShopLogo() {
 private fun CoffeeShopLogoPreview() {
     CoffeeShopTheme(darkTheme = false) {
         CoffeeShopLogo()
+    }
+}
+
+@Preview(name = "medium - light", showBackground = true)
+@Composable
+private fun CustomMediumTopAppBarLightPreview() {
+    CoffeeShopTheme(darkTheme = true) {
+        CustomMediumTopAppBar()
+    }
+}
+
+@Preview(name = "medium - dark", showBackground = true)
+@Composable
+private fun CustomMediumTopAppBarDarkPreview() {
+    CoffeeShopTheme(darkTheme = false) {
+        CustomMediumTopAppBar()
     }
 }
