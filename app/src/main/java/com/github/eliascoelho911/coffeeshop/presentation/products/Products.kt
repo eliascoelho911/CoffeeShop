@@ -14,7 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import com.github.eliascoelho911.coffeeshop.presentation.common.CoffeeShopMediumTopAppBar
+import com.github.eliascoelho911.coffeeshop.presentation.common.CustomMediumTopAppBar
 
 @Composable
 fun ProductsScreen() {
@@ -25,7 +25,7 @@ fun ProductsScreen() {
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { CoffeeShopMediumTopAppBar(scrollBehavior = scrollBehavior) }
+        topBar = { CustomMediumTopAppBar(scrollBehavior = scrollBehavior) }
     ) { innerPadding ->
         LazyColumn(
             contentPadding = innerPadding,
