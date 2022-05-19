@@ -1,15 +1,19 @@
 package com.github.eliascoelho911.coffeeshop.presentation.common
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -22,25 +26,36 @@ import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
 private val CourgetteFontFamily = FontFamily(Font(R.font.courgette_regular))
 
 @Composable
-fun CoffeeShopLogo(
+fun CoffeeShopMediumTopAppBar(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    navigationIcon: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
+    colors: TopAppBarColors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer),
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+    MediumTopAppBar(modifier = modifier,
+        title = { CoffeeShopLogo() },
+        scrollBehavior = scrollBehavior,
+        navigationIcon = navigationIcon,
+        colors = colors,
+        actions = actions)
+}
+
+@Composable
+private fun CoffeeShopLogo() {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.headlineSmall.copy(fontFamily = CourgetteFontFamily),
-            maxLines = 1,
-            color = color)
+            maxLines = 1)
         Spacer(modifier = Modifier.width(4.dp))
         Icon(painter = painterResource(id = R.drawable.ic_coffee),
-            contentDescription = "",
-            tint = color)
+            contentDescription = "")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CoffeeShopLogoPreview() {
+private fun CoffeeShopLogoPreview() {
     CoffeeShopTheme(darkTheme = false) {
         CoffeeShopLogo()
     }
