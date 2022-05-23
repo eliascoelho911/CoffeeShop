@@ -30,7 +30,8 @@ fun CustomMediumTopAppBar(
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
-    colors: TopAppBarColors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+    colors: TopAppBarColors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer,
+        scrolledContainerColor = MaterialTheme.colorScheme.surface),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     MediumTopAppBar(modifier = modifier,
