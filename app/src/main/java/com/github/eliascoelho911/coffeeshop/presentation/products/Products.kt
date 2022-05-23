@@ -1,46 +1,80 @@
 package com.github.eliascoelho911.coffeeshop.presentation.products
 
-import androidx.compose.animation.rememberSplineBasedDecay
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.github.eliascoelho911.coffeeshop.presentation.common.CustomMediumTopAppBar
+import com.github.eliascoelho911.coffeeshop.presentation.common.CustomScrollableTabRow
+import com.github.eliascoelho911.coffeeshop.presentation.common.ResultUi
+import com.github.eliascoelho911.coffeeshop.presentation.common.SuccessUi
+import com.github.eliascoelho911.coffeeshop.presentation.common.on
+import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
+import com.github.eliascoelho911.coffeeshop.presentation.vo.CategoryVO
 
 @Composable
-fun ProductsScreen() {
-    val decayAnimationSpec = rememberSplineBasedDecay<Float>()
-    val scrollBehavior = remember(decayAnimationSpec) {
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
-    }
-
+fun ProductsScreen(state: ProductsState) {
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { CustomMediumTopAppBar(scrollBehavior = scrollBehavior) }
+        modifier = Modifier.nestedScroll(state.scrollBehavior.nestedScrollConnection),
+        topBar = { CustomMediumTopAppBar(scrollBehavior = state.scrollBehavior) }
     ) { innerPadding ->
-        LazyColumn(
-            contentPadding = innerPadding,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            val list = (0..75).map { it.toString() }
-            items(count = list.size) {
-                Text(
-                    text = list[it],
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                )
+        Column(Modifier.padding(innerPadding)) {
+            ProductsTab(state.categories)
+        }
+    }
+}
+
+@Composable
+private fun ProductsTab(categories: State<ResultUi<List<CategoryVO>>>) {
+    var selectedTabIndex by remember { mutableStateOf(0) }
+
+    categories.value.on(success = { data ->
+        CustomScrollableTabRow(modifier = Modifier.fillMaxWidth(),
+            selectedTabIndex = selectedTabIndex) {
+            data.forEach { category ->
+                val onClick = { selectedTabIndex = category.index }
+
+                Tab(selected = category.index == selectedTabIndex,
+                    onClick = onClick,
+                    text = { Text(text = category.name) })
             }
         }
+    })
+}
+
+@Composable
+private fun ProductsTabSuccessPreview() {
+    val categories = remember {
+        mutableStateOf(SuccessUi(listOf(
+            CategoryVO(0, "Primeiro item"),
+            CategoryVO(1, "Segundo item"))))
+    }
+    ProductsTab(categories)
+}
+
+@Composable
+@Preview
+private fun ProductsSuccessLightPreview() {
+    CoffeeShopTheme(darkTheme = false) {
+        ProductsTabSuccessPreview()
+    }
+}
+
+@Composable
+@Preview
+private fun ProductsTabSuccessDarkPreview() {
+    CoffeeShopTheme(darkTheme = true) {
+        ProductsTabSuccessPreview()
     }
 }

@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Americano",
+    "description": "Espresso longo com água",
+    "size": "150ml",
+    "category": "Espresso",
+    "image_url": "https://enjoyjava.com/wp-content/uploads/2021/08/how-to-make-an-americano.jpg",
+    "value_RS": 8.5,
+    "is_top_selling": false,
+    "is_new": false
+  },
+  {
+    "name": "Doppio",
+    "description": "Espresso duplo, extraído em máquina La Marzocco. Utilizamos um blend de grãos especiais, 100% arábico.",
+    "size": "100ml",
+    "category": "Espresso",
+    "image_url": "https://media.timeout.com/images/105856327/image.jpg",
+    "value_RS": 10.9,
+    "is_top_selling": false,
+    "is_new": false
+  },
+  {
+    "name": "Tradicional",
+    "description": "Espresso extraído em máquina La Marzocco. Utilizamos um blend de grãos especiais, 100% arábico.",
+    "size": "100ml",
+    "category": "Espresso",
+    "image_url": "https://media.timeout.com/images/105856327/image.jpg",
+    "value_RS": 10.9,
+    "is_top_selling": true,
+    "is_new": false
+  },
+  {
+    "name": "Chocolate quente",
+    "description": "Blend exclusivo e incorpado, composto por chocolate europeu, chocolate ao leite e chocolate do Padre, vaporizado com leite.",
+    "size": "180ml",
+    "category": "Bebidas quentes",
+    "image_url": "https://vivareceita-cdn.s3.amazonaws.com/uploads/2021/05/Aprenda-como-fazer-chocolate-quente-simples.-Fonte-Pinterest.jpg",
+    "value_RS": 16.5,
+    "is_top_selling": false,
+    "is_new": true
+  },
+  {
+    "name": "Latte",
+    "description": "Leite vaporizado, espresso, finalizado com creme de leite.",
+    "size": "180ml",
+    "category": "Bebidas quentes",
+    "image_url": "https://www.nespresso.com/ncp/res/uploads/recipes/Latte%20Quente%2006.jpg",
+    "value_RS": 12.5,
+    "is_top_selling": false,
+    "is_new": false
+  },
+  {
+    "name": "Cappuccino Especial",
+    "description": "Cappuccino elaborado com espresso e nosso exclusivo blend de chocolate vaporizado, finalizado com chantily e raspas de chocolate.",
+    "size": "240ml",
+    "category": "Bebidas quentes",
+    "image_url": "https://reviewcafe.com.br/wp-content/uploads/2020/08/cappuccino-feito-em-casa.jpg",
+    "value_RS": 31.5,
+    "is_top_selling": true,
+    "is_new": false
+  },
+  {
+    "name": "Caramel Mocaccino",
+    "description": "Espresso, ganache de chocolate ao leite, leite vaporizado e crema",
+    "size": "240ml",
+    "category": "Bebidas quentes",
+    "image_url": "https://coffeelounge.com.br/wp-content/uploads/2020/06/mocaccino-2-square.jpg",
+    "value_RS": 19.9,
+    "is_top_selling": true,
+    "is_new": false
+  },
+  {
+    "name": "Mocaccino",
+    "description": "Espresso, ganache de chocolate ao leite, leite vaporizado e crema",
+    "size": "240ml",
+    "category": "Bebidas quentes",
+    "image_url": "https://paodanona.com.br/wp-content/uploads/2020/07/mocaccino-P.jpg",
+    "value_RS": 19.9,
+    "is_top_selling": false,
+    "is_new": false
+  },
+  {
+    "name": "White Mocaccino",
+    "description": "Espresso, ganache de chocolate branco, leite vaporizado e crema",
+    "size": "240ml",
+    "category": "Bebidas quentes",
+    "image_url": "https://boomi.b-cdn.net/wp-content/uploads/2021/12/BE025.jpg",
+    "value_RS": 19.9,
+    "is_top_selling": false,
+    "is_new": false
+  },
+  {
+    "name": "Avocado Toast",
+    "description": "Fatia de pão de fermentação natural, quentinho, com avocado e tomate, tirinhas de cebola roxa, temperado com sal, azeite e limão.",
+    "size": null,
+    "category": "Salgados e sanduíches",
+    "image_url": "https://img.cybercook.com.br/receitas/367/sanduiche-de-pasta-de-abacate-com-ovo.jpeg",
+    "value_RS": 32.0,
+    "is_top_selling": true,
+    "is_new": false
+  },
+  {
+    "name": "Cosa Nostra",
+    "description": "Sanduíche no pão ciabata grelhado com queijo provolone, pepperoni, tomatinho confit e molho French.",
+    "size": null,
+    "category": "Salgados e sanduíches",
+    "image_url": "https://scontent-gru2-2.xx.fbcdn.net/v/t1.6435-9/44033065_550025835421418_3785537265061593088_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9267fe&_nc_ohc=2jpN5x0fiFQAX8OTedu&_nc_ht=scontent-gru2-2.xx&oh=00_AT-qx8QYytAgJeTuoe3LeN2mX3t74E_666lxSfJqvs2dUA&oe=62ABBF6A",
+    "value_RS": 32.0,
+    "is_top_selling": false,
+    "is_new": false
+  },
+  {
+    "name": "Croissant com Queijo, Tomate e Rúcula",
+    "description": "Croissant com queijo minas quente e recheado com tomatinhos confit e rúcula.",
+    "size": null,
+    "category": "Salgados e sanduíches",
+    "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/0b/54/5e/4d/croasonho-de-tomate-seco.jpg",
+    "value_RS": 25.9,
+    "is_top_selling": false,
+    "is_new": true
+  },
+  {
+    "name": "Croque monsieur",
+    "description": "Pão brioche recheado com queijo gruyère, presunto e molho bechamel, coberto com parmesão gratinado.",
+    "size": null,
+    "category": "Salgados e sanduíches",
+    "image_url": "https://s2.glbimg.com/ZRjCa6h103c27HjIyTGB1Z57ntU=/512x320/smart/e.glbimg.com/og/ed/f/original/2020/04/06/rendez_vous_-_croque_monsieur_1.jpg",
+    "value_RS": 33.5,
+    "is_top_selling": true,
+    "is_new": false
+  },
+  {
+    "name": "Grilled ham and cheese",
+    "description": "Toast de pão brioche grelhado com queijo prato, presunto e tomatinho confit.",
+    "size": null,
+    "category": "Salgados e sanduíches",
+    "image_url": "https://images.media-allrecipes.com/userphotos/441591.jpg",
+    "value_RS": 23.5,
+    "is_top_selling": false,
+    "is_new": false
+  }
+]
