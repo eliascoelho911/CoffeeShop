@@ -1,5 +1,18 @@
 [
-  "Espresso",
-  "Bebidas quentes",
-  "Salgados e sanduíches"
+  {
+    "id": 0,
+    "name": "Espresso"
+  },
+  {
+    "id": 1,
+    "name": "Bebidas quentes"
+  },
+  {
+    "id": 2,
+    "name": "Bebidas geladas"
+  },
+  {
+    "id": 3,
+    "name": "Salgados e sanduíches"
+  }
 ]

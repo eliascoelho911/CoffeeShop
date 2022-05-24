@@ -45,7 +45,7 @@ fun CustomScrollableTabRow(
 
 @Composable
 private fun TabRowDivider() {
-    Divider(thickness = 2.dp, color = MaterialTheme.colorScheme.surfaceVariant)
+    Divider(modifier = Modifier.fillMaxWidth(), thickness = 2.dp, color = MaterialTheme.colorScheme.surfaceVariant)
 }
 
 @Composable
