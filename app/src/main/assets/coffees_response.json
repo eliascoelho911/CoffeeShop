@@ -1,5 +1,6 @@
 [
   {
+    "id": 0,
     "name": "Americano",
     "description": "Espresso longo com água",
     "size": "150ml",
@@ -10,6 +11,7 @@
     "is_new": false
   },
   {
+    "id": 1,
     "name": "Doppio",
     "description": "Espresso duplo, extraído em máquina La Marzocco. Utilizamos um blend de grãos especiais, 100% arábico.",
     "size": "100ml",
@@ -20,6 +22,7 @@
     "is_new": false
   },
   {
+    "id": 2,
     "name": "Tradicional",
     "description": "Espresso extraído em máquina La Marzocco. Utilizamos um blend de grãos especiais, 100% arábico.",
     "size": "100ml",
@@ -30,6 +33,7 @@
     "is_new": false
   },
   {
+    "id": 3,
     "name": "Chocolate quente",
     "description": "Blend exclusivo e incorpado, composto por chocolate europeu, chocolate ao leite e chocolate do Padre, vaporizado com leite.",
     "size": "180ml",
@@ -40,6 +44,7 @@
     "is_new": true
   },
   {
+    "id": 4,
     "name": "Latte",
     "description": "Leite vaporizado, espresso, finalizado com creme de leite.",
     "size": "180ml",
@@ -50,6 +55,7 @@
     "is_new": false
   },
   {
+    "id": 5,
     "name": "Cappuccino Especial",
     "description": "Cappuccino elaborado com espresso e nosso exclusivo blend de chocolate vaporizado, finalizado com chantily e raspas de chocolate.",
     "size": "240ml",
@@ -60,6 +66,7 @@
     "is_new": false
   },
   {
+    "id": 6,
     "name": "Caramel Mocaccino",
     "description": "Espresso, ganache de chocolate ao leite, leite vaporizado e crema",
     "size": "240ml",
@@ -70,6 +77,7 @@
     "is_new": false
   },
   {
+    "id": 7,
     "name": "Mocaccino",
     "description": "Espresso, ganache de chocolate ao leite, leite vaporizado e crema",
     "size": "240ml",
@@ -80,6 +88,7 @@
     "is_new": false
   },
   {
+    "id": 8,
     "name": "White Mocaccino",
     "description": "Espresso, ganache de chocolate branco, leite vaporizado e crema",
     "size": "240ml",
@@ -90,6 +99,7 @@
     "is_new": false
   },
   {
+    "id": 9,
     "name": "Avocado Toast",
     "description": "Fatia de pão de fermentação natural, quentinho, com avocado e tomate, tirinhas de cebola roxa, temperado com sal, azeite e limão.",
     "size": null,
@@ -100,6 +110,7 @@
     "is_new": false
   },
   {
+    "id": 10,
     "name": "Cosa Nostra",
     "description": "Sanduíche no pão ciabata grelhado com queijo provolone, pepperoni, tomatinho confit e molho French.",
     "size": null,
@@ -110,6 +121,7 @@
     "is_new": false
   },
   {
+    "id": 11,
     "name": "Croissant com Queijo, Tomate e Rúcula",
     "description": "Croissant com queijo minas quente e recheado com tomatinhos confit e rúcula.",
     "size": null,
@@ -120,6 +132,7 @@
     "is_new": true
   },
   {
+    "id": 12,
     "name": "Croque monsieur",
     "description": "Pão brioche recheado com queijo gruyère, presunto e molho bechamel, coberto com parmesão gratinado.",
     "size": null,
@@ -130,6 +143,7 @@
     "is_new": false
   },
   {
+    "id": 13,
     "name": "Grilled ham and cheese",
     "description": "Toast de pão brioche grelhado com queijo prato, presunto e tomatinho confit.",
     "size": null,

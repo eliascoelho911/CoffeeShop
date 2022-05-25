@@ -1,5 +1,6 @@
 package com.github.eliascoelho911.coffeeshop.presentation.common
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
@@ -33,17 +34,15 @@ import com.github.eliascoelho911.coffeeshop.R
 import com.github.eliascoelho911.coffeeshop.domain.entities.Product
 import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
 import com.github.eliascoelho911.coffeeshop.presentation.util.formatToCurrency
-import com.valentinilk.shimmer.Shimmer
-import com.valentinilk.shimmer.ShimmerBounds
-import com.valentinilk.shimmer.rememberShimmer
-import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun ProductItem(modifier: Modifier = Modifier, product: Product) {
-    val shimmer = rememberShimmer(shimmerBounds = ShimmerBounds.Window)
+fun ProductItem(
+    modifier: Modifier = Modifier,
+    product: Product,
+) {
     Row(modifier.height(96.dp)) {
         Box(modifier = Modifier.size(96.dp)) {
-            ProductImage(product, shimmer)
+            ProductImage(product)
             Label(product)
         }
         Spacer(modifier = Modifier.width(16.dp))
@@ -60,7 +59,6 @@ fun ProductItem(modifier: Modifier = Modifier, product: Product) {
 @Composable
 private fun ProductImage(
     product: Product,
-    shimmer: Shimmer,
 ) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -70,7 +68,9 @@ private fun ProductImage(
         contentDescription = product.name,
         modifier = ImageModifier,
         contentScale = ContentScale.Crop,
-        loading = { Box(ImageModifier.shimmer(shimmer)) }
+        loading = {
+            Box(ImageModifier.background(MaterialTheme.colorScheme.onSurface))
+        }
     )
 }
 
@@ -148,7 +148,7 @@ private val ImageModifier = Modifier
     .clip(RoundedCornerShape(8.dp))
     .size(96.dp)
 
-private val PreviewProduct = Product(name = "Cappuccino Especial",
+private val PreviewProduct = Product(id = 0, name = "Cappuccino Especial",
     description = "Cappuccino elaborado com espresso e nosso exclusivo blend de chocolate vaporizado, finalizado com chantily e raspas de chocolate. Experimente essa deliciosa bebida!",
     size = "240ml",
     categoryId = 1,
