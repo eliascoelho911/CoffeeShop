@@ -33,6 +33,8 @@ class ProductsViewModel(
         private set
 
     init {
+        setCurrentCategoryId(0)
+
         viewModelScope.launch {
             combine(categories, products) { categories, products ->
                 ProductsUiState(categories, products)
@@ -44,6 +46,7 @@ class ProductsViewModel(
 
     fun setCurrentCategoryId(categoryId: Int) {
         val productsOfThisCategory = findProductsByCategoryId.invoke(categoryId)
+
         viewModelScope.launch {
             products.emitAll(productsOfThisCategory)
         }
