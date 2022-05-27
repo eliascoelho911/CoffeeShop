@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -18,22 +18,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import com.github.eliascoelho911.coffeeshop.domain.entities.Category
 import com.github.eliascoelho911.coffeeshop.domain.entities.CategoryWithProducts
 import com.github.eliascoelho911.coffeeshop.presentation.common.CustomMediumTopAppBar
 import com.github.eliascoelho911.coffeeshop.presentation.common.CustomScrollableTabRow
 import com.github.eliascoelho911.coffeeshop.presentation.common.ProductItem
 import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
-import com.valentinilk.shimmer.ShimmerBounds
-import com.valentinilk.shimmer.rememberShimmer
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProductsScreen(viewModel: ProductsViewModel) {
@@ -45,17 +46,54 @@ fun ProductsScreen(viewModel: ProductsViewModel) {
         topBar = { CustomMediumTopAppBar(scrollBehavior = screenState.scrollBehavior) }
     ) { innerPadding ->
         Column(Modifier.padding(innerPadding)) {
-            ProductsTab(uiState.categories, onSelectTab = { })
-            Products(uiState.categoriesWithProducts)
+            ProductsContent(uiState.categoriesWithProducts, uiState.categories)
         }
     }
 }
 
 @Composable
-fun Products(categoriesWithProducts: List<CategoryWithProducts>) {
+fun ProductsContent(
+    categoriesWithProducts: List<CategoryWithProducts>,
+    categories: List<Category>,
+) {
+    val categoryIdToPositionOnList = remember(categoriesWithProducts) {
+        val map = mutableMapOf<Int, Int>()
+        var previousCategoryIndex = 0
+        var numberOfProductsFromPreviousCategory = 0
+        categoriesWithProducts.forEach {
+            map[it.category.id] = if (map.isEmpty()) 0
+            else previousCategoryIndex + numberOfProductsFromPreviousCategory + 1
+
+            previousCategoryIndex = map[it.category.id]!!
+            numberOfProductsFromPreviousCategory = it.products.size
+        }
+        map
+    }
+    val lazyListState = rememberLazyListState()
+    val selectedTabIndex by remember {
+        derivedStateOf {
+            val categoryId = categoryIdToPositionOnList.filterValues {
+                lazyListState.firstVisibleItemIndex >= it
+            }.maxByOrNull { it.value }?.key
+            categories.singleOrNull { it.id == categoryId }?.index ?: 0
+        }
+    }
+    val lifecycleOwner = rememberCoroutineScope()
+
+    ProductsTab(categories = categories,
+        onSelectTab = { categoryId ->
+            categoryIdToPositionOnList[categoryId]?.let {
+                lifecycleOwner.launch {
+                    lazyListState.animateScrollToItem(it)
+                }
+            }
+        },
+        selectedTabIndex = selectedTabIndex)
+
     LazyColumn(modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        state = lazyListState) {
 
         categoriesWithProducts.forEach { categoryWithProducts ->
             item(key = "c${categoryWithProducts.category.id}") {
@@ -63,7 +101,7 @@ fun Products(categoriesWithProducts: List<CategoryWithProducts>) {
                     text = categoryWithProducts.category.name,
                     style = MaterialTheme.typography.headlineLarge)
             }
-            items(categoryWithProducts.products, key = { "p${it.id}" }) { product ->
+            items(categoryWithProducts.products, key = { product -> "p${product.id}" }) { product ->
                 ProductItem(product = product)
             }
         }
@@ -73,16 +111,14 @@ fun Products(categoriesWithProducts: List<CategoryWithProducts>) {
 @Composable
 private fun ProductsTab(
     categories: List<Category>,
-    onSelectTab: (index: Int) -> Unit = {},
+    selectedTabIndex: Int,
+    onSelectTab: (categoryId: Int) -> Unit = {},
 ) {
-    var selectedTabIndex by remember { mutableStateOf(0) }
-
     CustomScrollableTabRow(modifier = Modifier.fillMaxWidth(),
         selectedTabIndex = selectedTabIndex) {
         categories.forEach { category ->
             val onClick = {
-                selectedTabIndex = category.index
-                onSelectTab(selectedTabIndex)
+                onSelectTab(category.id)
             }
 
             Tab(selected = category.index == selectedTabIndex,
@@ -107,26 +143,26 @@ private fun rememberProductsScreenState(
 }
 
 @Composable
-private fun ProductsTabSuccessPreview() {
+private fun ProductsTabPreview() {
     val categories = remember {
         listOf(Category(0, 0, "Primeiro item"),
             Category(1, 0, "Segundo item"))
     }
-    ProductsTab(categories)
+    ProductsTab(categories, 0)
 }
 
 @Composable
 @Preview
-private fun ProductsSuccessLightPreview() {
+private fun ProductsTabLightPreview() {
     CoffeeShopTheme(darkTheme = false) {
-        ProductsTabSuccessPreview()
+        ProductsTabPreview()
     }
 }
 
 @Composable
 @Preview
-private fun ProductsTabSuccessDarkPreview() {
+private fun ProductsTabDarkPreview() {
     CoffeeShopTheme(darkTheme = true) {
-        ProductsTabSuccessPreview()
+        ProductsTabPreview()
     }
 }

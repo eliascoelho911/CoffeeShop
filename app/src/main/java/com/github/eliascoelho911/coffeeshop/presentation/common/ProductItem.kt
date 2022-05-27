@@ -2,7 +2,6 @@ package com.github.eliascoelho911.coffeeshop.presentation.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,9 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.ConstraintLayoutScope
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
@@ -42,47 +41,56 @@ fun ProductItem(
 ) {
     Row(modifier.height(96.dp)) {
         Box(modifier = Modifier.size(96.dp)) {
-            ProductImage(product)
-            Label(product)
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(product.imageUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = product.name,
+                modifier = ImageModifier,
+                contentScale = ContentScale.Crop,
+                loading = {
+                    Box(ImageModifier.background(MaterialTheme.colorScheme.onSurface))
+                }
+            )
+
+            val labelModifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(4.dp)
+            when {
+                product.isNew && product.isTopSelling -> TopSellingLabel(labelModifier)
+                product.isTopSelling -> TopSellingLabel(labelModifier)
+                product.isNew -> NewLabel(labelModifier)
+            }
         }
         Spacer(modifier = Modifier.width(16.dp))
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (nameRef, descriptionRef, valueRef) = createRefs()
 
-            Title(nameRef, product)
-            Description(descriptionRef, nameRef, valueRef, product)
-            Value(valueRef, product)
-        }
-    }
-}
+            Text(modifier = Modifier.constrainAs(nameRef) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                width = Dimension.fillToConstraints
+            }, text = product.name, style = MaterialTheme.typography.titleSmall,
+                overflow = TextOverflow.Ellipsis)
 
-@Composable
-private fun ProductImage(
-    product: Product,
-) {
-    SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(product.imageUrl)
-            .crossfade(true)
-            .build(),
-        contentDescription = product.name,
-        modifier = ImageModifier,
-        contentScale = ContentScale.Crop,
-        loading = {
-            Box(ImageModifier.background(MaterialTheme.colorScheme.onSurface))
-        }
-    )
-}
+            Text(modifier = Modifier.constrainAs(descriptionRef) {
+                top.linkTo(nameRef.bottom, 2.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(valueRef.top, 2.dp)
+                height = Dimension.fillToConstraints
+                width = Dimension.fillToConstraints
+            }, text = product.description, style = MaterialTheme.typography.bodySmall,
+                overflow = TextOverflow.Ellipsis)
 
-@Composable
-private fun BoxScope.Label(product: Product) {
-    val labelModifier = Modifier
-        .align(Alignment.TopEnd)
-        .padding(4.dp)
-    when {
-        product.isNew && product.isTopSelling -> TopSellingLabel(labelModifier)
-        product.isTopSelling -> TopSellingLabel(labelModifier)
-        product.isNew -> NewLabel(labelModifier)
+            Text(modifier = Modifier.constrainAs(valueRef) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+            }, text = product.value.formatToCurrency(),
+                style = MaterialTheme.typography.titleSmall)
+        }
     }
 }
 
@@ -98,50 +106,6 @@ fun NewLabel(modifier: Modifier = Modifier) {
     Label(modifier = modifier) {
         Text(text = stringResource(id = R.string.is_new))
     }
-}
-
-@Composable
-private fun ConstraintLayoutScope.Value(
-    valueRef: ConstrainedLayoutReference,
-    product: Product,
-) {
-    Text(modifier = Modifier.Companion.constrainAs(valueRef) {
-        bottom.linkTo(parent.bottom)
-        start.linkTo(parent.start)
-    }, text = product.value.formatToCurrency(),
-        style = MaterialTheme.typography.titleSmall)
-}
-
-@Composable
-private fun ConstraintLayoutScope.Description(
-    descriptionRef: ConstrainedLayoutReference,
-    nameRef: ConstrainedLayoutReference,
-    valueRef: ConstrainedLayoutReference,
-    product: Product,
-) {
-    Text(modifier = Modifier.Companion.constrainAs(descriptionRef) {
-        top.linkTo(nameRef.bottom, 2.dp)
-        start.linkTo(parent.start)
-        end.linkTo(parent.end)
-        bottom.linkTo(valueRef.top, 2.dp)
-        height = Dimension.fillToConstraints
-        width = Dimension.fillToConstraints
-    }, text = product.description, style = MaterialTheme.typography.bodySmall,
-        overflow = TextOverflow.Ellipsis)
-}
-
-@Composable
-private fun ConstraintLayoutScope.Title(
-    nameRef: ConstrainedLayoutReference,
-    product: Product,
-) {
-    Text(modifier = Modifier.Companion.constrainAs(nameRef) {
-        top.linkTo(parent.top)
-        start.linkTo(parent.start)
-        end.linkTo(parent.end)
-        width = Dimension.fillToConstraints
-    }, text = product.name, style = MaterialTheme.typography.titleSmall,
-        overflow = TextOverflow.Ellipsis)
 }
 
 private val ImageModifier = Modifier
