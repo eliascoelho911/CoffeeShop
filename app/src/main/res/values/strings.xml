@@ -2,4 +2,6 @@
     <string name="app_name">Coffee Shop</string>
     <string name="is_new">Novo</string>
     <string name="is_top_selling">Popular</string>
+    <string name="order">Conta</string>
+    <string name="search">Buscar</string>
 </resources>

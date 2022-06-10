@@ -11,12 +11,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.TopAppBarScrollState
+import androidx.compose.material3.rememberTopAppBarScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -24,35 +28,67 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
+import com.github.eliascoelho911.coffeeshop.R
 import com.github.eliascoelho911.coffeeshop.domain.entities.Category
 import com.github.eliascoelho911.coffeeshop.domain.entities.CategoryWithProducts
-import com.github.eliascoelho911.coffeeshop.presentation.common.CustomMediumTopAppBar
-import com.github.eliascoelho911.coffeeshop.presentation.common.CustomScrollableTabRow
-import com.github.eliascoelho911.coffeeshop.presentation.common.ProductItem
+import com.github.eliascoelho911.coffeeshop.presentation.components.CoffeeShopMediumTopAppBar
+import com.github.eliascoelho911.coffeeshop.presentation.components.CustomScrollableTabRow
+import com.github.eliascoelho911.coffeeshop.presentation.components.ProductItem
 import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProductsScreen(viewModel: ProductsViewModel) {
-    val screenState = rememberProductsScreenState()
+fun ProductsScreen(
+    viewModel: ProductsScreenViewModel,
+    decayAnimationSpec: DecayAnimationSpec<Float> = rememberSplineBasedDecay(),
+    topAppBarScrollState: TopAppBarScrollState = rememberTopAppBarScrollState(),
+    scrollBehavior: TopAppBarScrollBehavior = remember {
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec, topAppBarScrollState)
+    },
+) {
     val uiState = viewModel.uiState
 
     Scaffold(
-        modifier = Modifier.nestedScroll(screenState.scrollBehavior.nestedScrollConnection),
-        topBar = { CustomMediumTopAppBar(scrollBehavior = screenState.scrollBehavior) }
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            ProductsAppTopBar(
+                scrollBehavior = scrollBehavior,
+                onSearchAction = {}
+            )
+        }
     ) { innerPadding ->
-        Column(Modifier.padding(innerPadding)) {
-            ProductsContent(uiState.categoriesWithProducts, uiState.categories)
+        Column(modifier = Modifier.padding(innerPadding)) {
+            ProductsContent(
+                categoriesWithProducts = uiState.categoriesWithProducts,
+                categories = uiState.categories,
+            )
         }
     }
 }
 
 @Composable
-fun ProductsContent(
+private fun ProductsAppTopBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+    onSearchAction: () -> Unit,
+) {
+    CoffeeShopMediumTopAppBar(scrollBehavior = scrollBehavior, actions = {
+        IconButton(onClick = onSearchAction) {
+            Icon(painter = painterResource(id = R.drawable.ic_search),
+                contentDescription = stringResource(id = R.string.search))
+        }
+        IconButton(onClick = {}) {
+            Icon(painter = painterResource(id = R.drawable.ic_order),
+                contentDescription = stringResource(id = R.string.order))
+        }
+    })
+}
+
+@Composable
+private fun ProductsContent(
     categoriesWithProducts: List<CategoryWithProducts>,
     categories: List<Category>,
 ) {
@@ -126,20 +162,6 @@ private fun ProductsTab(
                 text = { Text(text = category.name) })
         }
     }
-}
-
-private class ProductsScreenState(
-    val scrollBehavior: TopAppBarScrollBehavior,
-)
-
-@Composable
-private fun rememberProductsScreenState(
-    decayAnimationSpec: DecayAnimationSpec<Float> = rememberSplineBasedDecay(),
-    scrollBehavior: TopAppBarScrollBehavior = remember {
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
-    },
-) = remember {
-    ProductsScreenState(scrollBehavior)
 }
 
 @Composable

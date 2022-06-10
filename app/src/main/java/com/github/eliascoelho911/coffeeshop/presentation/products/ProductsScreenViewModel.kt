@@ -11,24 +11,24 @@ import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllCategories
 import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllCategoriesWithProducts
 import kotlinx.coroutines.launch
 
-data class ProductsUiState(
+data class ProductsScreenState(
     val categories: List<Category> = emptyList(),
     val categoriesWithProducts: List<CategoryWithProducts> = emptyList(),
 )
 
-class ProductsViewModel(
+class ProductsScreenViewModel(
     getAllCategoriesWithProducts: GetAllCategoriesWithProducts,
     getAllCategories: GetAllCategories,
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(ProductsUiState())
+    var uiState by mutableStateOf(ProductsScreenState())
         private set
 
     init {
         viewModelScope.launch {
             val categories = getAllCategories()
             val categoriesWithProducts = getAllCategoriesWithProducts()
-            ProductsUiState(categories, categoriesWithProducts)
+            uiState = ProductsScreenState(categories, categoriesWithProducts)
         }
     }
 }

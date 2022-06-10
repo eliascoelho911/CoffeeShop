@@ -1,4 +1,4 @@
-package com.github.eliascoelho911.coffeeshop.presentation.common
+package com.github.eliascoelho911.coffeeshop.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

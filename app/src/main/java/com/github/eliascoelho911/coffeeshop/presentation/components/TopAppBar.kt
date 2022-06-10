@@ -1,4 +1,4 @@
-package com.github.eliascoelho911.coffeeshop.presentation.common
+package com.github.eliascoelho911.coffeeshop.presentation.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -26,12 +26,11 @@ import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
 private val CourgetteFontFamily = FontFamily(Font(R.font.courgette_regular))
 
 @Composable
-fun CustomMediumTopAppBar(
+fun CoffeeShopMediumTopAppBar(
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
-    colors: TopAppBarColors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer,
-        scrolledContainerColor = MaterialTheme.colorScheme.surface),
+    colors: TopAppBarColors = TopAppBarDefaults.mediumTopAppBarColors(),
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     MediumTopAppBar(modifier = modifier,
@@ -64,16 +63,16 @@ private fun CoffeeShopLogoPreview() {
 
 @Preview(name = "medium - light", showBackground = true)
 @Composable
-private fun CustomMediumTopAppBarLightPreview() {
+private fun CoffeeShopTopAppBarLightPreview() {
     CoffeeShopTheme(darkTheme = true) {
-        CustomMediumTopAppBar()
+        CoffeeShopMediumTopAppBar()
     }
 }
 
 @Preview(name = "medium - dark", showBackground = true)
 @Composable
-private fun CustomMediumTopAppBarDarkPreview() {
+private fun CoffeeShopTopAppBarDarkPreview() {
     CoffeeShopTheme(darkTheme = false) {
-        CustomMediumTopAppBar()
+        CoffeeShopMediumTopAppBar()
     }
 }
