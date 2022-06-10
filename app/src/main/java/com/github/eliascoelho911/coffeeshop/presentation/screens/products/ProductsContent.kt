@@ -1,4 +1,4 @@
-package com.github.eliascoelho911.coffeeshop.presentation.products
+package com.github.eliascoelho911.coffeeshop.presentation.screens.products
 
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.rememberSplineBasedDecay
@@ -40,17 +40,18 @@ import com.github.eliascoelho911.coffeeshop.presentation.components.CustomScroll
 import com.github.eliascoelho911.coffeeshop.presentation.components.ProductItem
 import com.github.eliascoelho911.coffeeshop.presentation.theme.CoffeeShopTheme
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ProductsScreen(
-    viewModel: ProductsScreenViewModel,
+    viewModel: ProductsScreenViewModel = getViewModel(),
     decayAnimationSpec: DecayAnimationSpec<Float> = rememberSplineBasedDecay(),
     topAppBarScrollState: TopAppBarScrollState = rememberTopAppBarScrollState(),
     scrollBehavior: TopAppBarScrollBehavior = remember {
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec, topAppBarScrollState)
     },
 ) {
-    val uiState = viewModel.uiState
+    val uiState = remember { viewModel.uiState }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

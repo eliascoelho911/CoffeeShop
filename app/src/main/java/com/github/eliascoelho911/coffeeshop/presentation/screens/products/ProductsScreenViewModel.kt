@@ -1,4 +1,4 @@
-package com.github.eliascoelho911.coffeeshop.presentation.products
+package com.github.eliascoelho911.coffeeshop.presentation.screens.products
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

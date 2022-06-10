@@ -7,7 +7,7 @@ import com.github.eliascoelho911.coffeeshop.domain.repositories.ProductRepositor
 import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllCategoriesWithProducts
 import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllCategories
 import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllProducts
-import com.github.eliascoelho911.coffeeshop.presentation.products.ProductsScreenViewModel
+import com.github.eliascoelho911.coffeeshop.presentation.screens.products.ProductsScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
