@@ -4,7 +4,7 @@ import com.github.eliascoelho911.coffeeshop.domain.entities.Product
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    fun getAll(): Flow<List<Product>>
+    suspend fun getAll(): List<Product>
 
-    fun findByCategoryId(categoryId: Int): Flow<List<Product>>
+    suspend fun findByCategoryId(categoryId: Int): List<Product>
 }

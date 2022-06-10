@@ -6,6 +6,7 @@ import com.github.eliascoelho911.coffeeshop.domain.repositories.CategoryReposito
 import com.github.eliascoelho911.coffeeshop.domain.repositories.ProductRepository
 import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllCategoriesWithProducts
 import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllCategories
+import com.github.eliascoelho911.coffeeshop.domain.usecases.GetAllProducts
 import com.github.eliascoelho911.coffeeshop.presentation.products.ProductsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -15,5 +16,6 @@ val appModule = module {
     single { GetAllCategories(get()) }
     single<ProductRepository> { ProductRepositoryImpl(get()) }
     single { GetAllCategoriesWithProducts(get(), get()) }
+    single { GetAllProducts(get()) }
     viewModel { ProductsViewModel(get(), get()) }
 }
